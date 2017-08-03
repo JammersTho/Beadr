@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS USERS(id int NOT NULL AUTO_INCREMENT,first_name varchar(255),last_name varchar(255),PRIMARY KEY(id));
+CREATE TABLE IF NOT EXISTS CUSTOMERS(customer_id int NOT NULL AUTO_INCREMENT,company varchar(255),contact varchar(255),delivery_address varchar(255),postcode varchar(255),email varchar(255),phone varchar(255),source varchar(255),PRIMARY KEY(customer_id));
+CREATE TABLE IF NOT EXISTS PRODUCTS(product_id int NOT NULL AUTO_INCREMENT,description varchar(255),glass_price varchar(255),rng varchar(255),PRIMARY KEY (product_id));
+CREATE TABLE IF NOT EXISTS ORDERS(order_id int NOT NULL AUTO_INCREMENT,order_date varchar(255),expected_delivery_date varchar(255),PRIMARY KEY(order_id));
+CREATE TABLE IF NOT EXISTS PAYMENTS(payment_id int NOT NULL AUTO_INCREMENT,method varchar(255),payment_date varchar(255),amount varchar(255),PRIMARY KEY(payment_id));
+CREATE TABLE IF NOT EXISTS BUNDLES(bundle_id int NOT NULL AUTO_INCREMENT,name varchar(255),discount varchar(255),PRIMARY KEY(bundle_id));
+CREATE TABLE IF NOT EXISTS FIXINGS(fixing_id int NOT NULL AUTO_INCREMENT,description varchar(255),price varchar(255),source varchar(255),PRIMARY KEY(fixing_id));
+CREATE TABLE IF NOT EXISTS PAYM_ORDR_LINK(link_id int NOT NULL AUTO_INCREMENT,order_id int(6),payment_id int(6),PRIMARY KEY(link_id),FOREIGN KEY(order_id) REFERENCES ORDERS(order_id),FOREIGN KEY(payment_id) REFERENCES PAYMENTS(payment_id));
+CREATE TABLE IF NOT EXISTS ORDR_PROD_LINK(link_id int NOT NULL AUTO_INCREMENT,order_id int(6),product_id int(6),PRIMARY KEY(link_id),FOREIGN KEY(order_id) REFERENCES ORDERS(order_id),FOREIGN KEY(product_id) REFERENCES PRODUCTS(product_id));
+CREATE TABLE IF NOT EXISTS PROD_BNDL_LINK(link_id int NOT NULL AUTO_INCREMENT,product_id int(6),bundle_id int(6),PRIMARY KEY(link_id),FOREIGN KEY(product_id) REFERENCES PRODUCTS(product_id),FOREIGN KEY(bundle_id) REFERENCES BUNDLES(bundle_id));
+CREATE TABLE IF NOT EXISTS PROD_FXNG_LINK(link_id int NOT NULL AUTO_INCREMENT,fixing_id int(6),product_id int(6),PRIMARY KEY(link_id),FOREIGN KEY(product_id) REFERENCES PRODUCTS(product_id),FOREIGN KEY(fixing_id) REFERENCES FIXINGS(fixing_id));
+CREATE TABLE IF NOT EXISTS CUST_ORDR_LINK(link_id int NOT NULL AUTO_INCREMENT,order_id int(6),customer_id int(6),PRIMARY KEY (link_id),FOREIGN KEY(order_id) REFERENCES ORDERS(order_id),FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id));
